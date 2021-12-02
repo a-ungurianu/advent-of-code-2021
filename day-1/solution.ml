@@ -1,11 +1,4 @@
-let read_lines name : string list =
-  let ic = open_in name in
-  let try_read () =
-    try Some (input_line ic) with End_of_file -> None in
-  let rec loop acc = match try_read () with
-    | Some s -> loop (s :: acc)
-    | None -> close_in ic; List.rev acc in
-  loop [];;
+open Stdio
 
 let rec zip (l1, l2) =
   match l1, l2 with
@@ -27,10 +20,9 @@ let get_increasing_count l =
   List.length filtered;;
 
 
-let numbers = List.map int_of_string (read_lines "./input");;
+let numbers = List.map int_of_string (In_channel.input_lines( open_in "./input"));;
 
 let num_increasing = get_increasing_count numbers;;
-
 
 print_string "Number of increasing values is: ";;
 print_int num_increasing;;
